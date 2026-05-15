@@ -25,10 +25,10 @@ def generate_diff(file1, file2):
                 diff[f'  {key}'] = first.get(key)
             else:
                 diff.update({f'- {key}': first[key], f'+ {key}': second[key]})
-    return transform_to_str(diff)
+    return convert_to_str(diff)
 
 
-def transform_to_str(coll):
+def convert_to_str(coll):
     items = [f'{key}: {normalize_value(value)}' for key, value in coll.items()]
     result = ['{', *items, '}']
 
@@ -39,3 +39,12 @@ def normalize_value(value):
     if isinstance(value, bool):
         return str(value).lower()
     return value
+
+
+def format_diff(key, value, char=None):
+    MAPPING = {
+        '+': f'+ {key}: {value}',
+        '-': f'- {key}: {value}',
+        'None': f'  {key}: {value}',
+    }
+    return MAPPING[char](key, value) if char else MAPPING['None'](key, value)
