@@ -29,7 +29,13 @@ def generate_diff(file1, file2):
 
 
 def transform_to_str(coll):
-    items = [f'{key}: {value}' for key, value in coll.items()]
+    items = [f'{key}: {normalize_char(value)}' for key, value in coll.items()]
     result = ['{', *items, '}']
 
     return '\n'.join(result)
+
+
+def normalize_char(char):
+    if isinstance(char, bool):
+        return str(char).lower()
+    return char
