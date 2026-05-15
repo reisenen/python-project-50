@@ -8,24 +8,29 @@ def load_file(file):
 
 
 def generate_diff(file1, file2):
-    first = load_file(file1)
-    second = load_file(file2)
+    first_file = load_file(file1)
+    second_file = load_file(file2)
 
-    diff = {}
+    diff = convert_to_str(get_diff(first_file, second_file))
+    return diff
 
+
+def get_diff(first, second):
     keys = first.keys() | second.keys()
+    result = {}
 
     for key in sorted(keys):
         if key not in first:
-            diff[f'+ {key}'] = second.get(key)
+            result[get_key(key, '+')] = second[key]
         elif key not in second:
-            diff[f'- {key}'] = first.get(key)
+            result[get_key(key, '-')] = first[key]
+        elif first[key] == second[key]:
+            result[get_key(key)] = first[key]
         else:
-            if first[key] == second[key]:
-                diff[f'  {key}'] = first.get(key)
-            else:
-                diff.update({f'- {key}': first[key], f'+ {key}': second[key]})
-    return convert_to_str(diff)
+            result[get_key(key, '-')] = first[key]
+            result[get_key(key, '+')] = second[key]
+
+    return result
 
 
 def convert_to_str(coll):
@@ -41,10 +46,10 @@ def normalize_value(value):
     return value
 
 
-def format_diff(key, value, char=None):
+def get_key(key, prefix=None):
     MAPPING = {
-        '+': f'+ {key}: {value}',
-        '-': f'- {key}: {value}',
-        'None': f'  {key}: {value}',
+        '+': f'+ {key}',
+        '-': f'- {key}',
+        'None': f'  {key}',
     }
-    return MAPPING[char](key, value) if char else MAPPING['None'](key, value)
+    return MAPPING[prefix] if prefix else MAPPING['None']
