@@ -1,9 +1,16 @@
 import json
 
 
-def generate_diff(first, second):
-    first = json.load(open(first))
-    second = json.load(open(second))
+def load_file(file):
+    with open(file) as f:
+        loaded = json.load(f)
+    return loaded
+
+
+def generate_diff(file1, file2):
+    first = load_file(file1)
+    second = load_file(file2)
+
     diff = {}
 
     keys = first.keys() | second.keys()
@@ -15,15 +22,14 @@ def generate_diff(first, second):
             diff[f'- {key}'] = first.get(key)
         else:
             if first[key] == second[key]:
-                diff[key] = first.get(key)
+                diff[f'  {key}'] = first.get(key)
             else:
                 diff.update({f'- {key}': first[key], f'+ {key}': second[key]})
     return transform_to_str(diff)
 
 
-def transform_to_str(data):
-    result = []
-    for k, v in data.items():
-        result.append(f'{k}: {v}')
-    string = '\n'.join(result)
-    return '{' + '\n' + string + '\n' + '}'
+def transform_to_str(coll):
+    items = [f'{key}: {value}' for key, value in coll.items()]
+    result = ['{', *items, '}']
+
+    return '\n'.join(result)
