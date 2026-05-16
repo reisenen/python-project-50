@@ -49,7 +49,9 @@ def render_diff(diff):
 
 
 def convert_to_text(coll):
-    items = [f'  {key}: {normalize_value(value)}' for key, value in coll.items()]
+    items = [
+        f'  {key}: {normalize_value(value)}' for key, value in coll.items()
+    ]
     result = ['{', *items, '}']
 
     return '\n'.join(result)
