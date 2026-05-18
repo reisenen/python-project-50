@@ -1,4 +1,4 @@
-from parser import load_file
+from gendiff.parser import load_file
 
 
 
