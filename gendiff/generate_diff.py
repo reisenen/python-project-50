@@ -1,7 +1,6 @@
 from gendiff.parser import load_file
 
 
-
 def generate_diff(file1, file2):
     first_file = load_file(file1)
     second_file = load_file(file2)

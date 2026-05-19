@@ -1,13 +1,17 @@
 import json
+from pathlib import Path
+
 import yaml
 
+PARSERS = {
+    'json': json.load,
+    'yaml': yaml.safe_load,
+    'yml': yaml.safe_load,
+}
 
-def load_file(file):
-    _, ext = str(file).split('.')
 
-    with open(file) as f:
-        if ext in ('yml', 'yaml'):
-            loaded = yaml.safe_load(f)
-        if ext in ('json'):
-            loaded = json.load(f)
-    return loaded
+def load_file(file_path):
+    ext = Path(file_path).suffix.lower().lstrip('.')
+
+    with open(file_path) as f:
+        return PARSERS[ext](f)
