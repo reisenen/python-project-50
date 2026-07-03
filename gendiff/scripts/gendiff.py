@@ -2,6 +2,8 @@ import argparse
 
 from gendiff import generate_diff
 
+from gendiff.stylish import stylish
+
 
 def main():
     parser = argparse.ArgumentParser(
