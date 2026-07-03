@@ -57,3 +57,19 @@ def test_generate_diff_yaml_plain():
     result = read_file("result_plain.txt")
 
     assert generate_diff(first_yaml, second_yaml, 'plain') == result
+
+
+def test_generate_diff_json_json():
+    first_json = get_test_data_path("file1_deep.json")
+    second_json = get_test_data_path("file2_deep.json")
+    result = read_file("result_json.json")
+
+    assert generate_diff(first_json, second_json, 'json') == result
+
+
+def test_generate_diff_yaml_json():
+    first_yaml = get_test_data_path("file1_deep.yml")
+    second_yaml = get_test_data_path("file2_deep.yml")
+    result = read_file("result_json.json")
+
+    assert generate_diff(first_yaml, second_yaml, 'json') == result
