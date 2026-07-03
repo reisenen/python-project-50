@@ -69,6 +69,8 @@ def stylish(diff):
 def normalize(value):
     if isinstance(value, bool):
         return str(value).lower()
-    if not value:
+    if value is None:
         return 'null'
+    if not value:
+        return ''
     return value
