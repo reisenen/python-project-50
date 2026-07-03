@@ -3,11 +3,17 @@ from gendiff.parser import load_file
 from gendiff.stylish import stylish
 
 
-def generate_diff(file1, file2):
+def generate_diff(file1, file2, format_name='stylish'):
     first_file = load_file(file1)
     second_file = load_file(file2)
 
-    return stylish(get_diff(first_file, second_file))
+    FORMATTERS = {
+        'stylish': stylish
+    }
+
+    diff = get_diff(first_file, second_file)
+
+    return FORMATTERS[format_name](diff)
 
 
 def get_diff(first, second):
