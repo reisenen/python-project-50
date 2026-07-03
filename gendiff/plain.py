@@ -14,15 +14,15 @@ def plain(diff):
                 if isinstance(value['value'], dict):
                     output.append(f"Property '{'.'.join(current_path)}' was added with value: [complex value]")
                 else:
-                    output.append(f"Property '{'.'.join(current_path)}' was added with value: '{normalize(value['value'])}'")
+                    output.append(f"Property '{'.'.join(current_path)}' was added with value: {normalize(value['value'])}")
             
             elif value['type'] == 'changed':
                 if isinstance(value['old'], dict):
-                    output.append(f"Property '{'.'.join(current_path)}' was updated. From [complex value] to '{normalize(value['new'])}'")
+                    output.append(f"Property '{'.'.join(current_path)}' was updated. From [complex value] to {normalize(value['new'])}")
                 elif isinstance(value['new'], dict):
-                    output.append(f"Property '{'.'.join(current_path)}' was updated. From '{normalize(value['old'])}' to [complex value]")
+                    output.append(f"Property '{'.'.join(current_path)}' was updated. From {normalize(value['old'])} to [complex value]")
                 else:
-                    output.append(f"Property '{'.'.join(current_path)}' was updated. From '{normalize(value['old'])}' to '{normalize(value['new'])}'")
+                    output.append(f"Property '{'.'.join(current_path)}' was updated. From {normalize(value['old'])} to {normalize(value['new'])}")
             
             elif value['type'] == 'deleted':
                 output.append(f"Property '{'.'.join(current_path)}' was removed")
@@ -38,5 +38,5 @@ def normalize(value):
     if value is None:
         return 'null'
     if not value:
-        return ''
-    return value
+        return f"''"
+    return f"'{value}'"
