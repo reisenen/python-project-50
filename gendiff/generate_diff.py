@@ -2,16 +2,21 @@ from gendiff.parser import load_file
 
 from gendiff.stylish import stylish
 
+from gendiff.plain import plain
+
 
 def generate_diff(file1, file2, format_name='stylish'):
     first_file = load_file(file1)
     second_file = load_file(file2)
 
     FORMATTERS = {
-        'stylish': stylish
+        'stylish': stylish,
+        'plain': plain,
     }
 
     diff = get_diff(first_file, second_file)
+
+    print(diff)
 
     return FORMATTERS[format_name](diff)
 
