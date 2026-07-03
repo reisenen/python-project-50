@@ -1,110 +1,92 @@
-[
-    {
+{
+    "common": {
         "type": "nested",
-        "key": "common",
-        "children": [
-            {
+        "children": {
+            "follow": {
                 "type": "added",
-                "key": "follow",
-                "new": false
+                "value": false
             },
-            {
+            "setting1": {
                 "type": "unchanged",
-                "key": "setting1",
                 "value": "Value 1"
             },
-            {
+            "setting2": {
                 "type": "deleted",
-                "key": "setting2",
-                "old": 200
+                "value": 200
             },
-            {
+            "setting3": {
                 "type": "changed",
-                "key": "setting3",
-                "new": null,
-                "old": true
+                "old": true,
+                "new": null
             },
-            {
+            "setting4": {
                 "type": "added",
-                "key": "setting4",
-                "new": "blah blah"
+                "value": "blah blah"
             },
-            {
+            "setting5": {
                 "type": "added",
-                "key": "setting5",
-                "new": {
+                "value": {
                     "key5": "value5"
                 }
             },
-            {
+            "setting6": {
                 "type": "nested",
-                "key": "setting6",
-                "children": [
-                    {
+                "children": {
+                    "doge": {
                         "type": "nested",
-                        "key": "doge",
-                        "children": [
-                            {
+                        "children": {
+                            "wow": {
                                 "type": "changed",
-                                "key": "wow",
-                                "new": "so much",
-                                "old": ""
+                                "old": "",
+                                "new": "so much"
                             }
-                        ]
+                        }
                     },
-                    {
+                    "key": {
                         "type": "unchanged",
-                        "key": "key",
                         "value": "value"
                     },
-                    {
+                    "ops": {
                         "type": "added",
-                        "key": "ops",
-                        "new": "vops"
+                        "value": "vops"
                     }
-                ]
-            }
-        ]
-    },
-    {
-        "type": "nested",
-        "key": "group1",
-        "children": [
-            {
-                "type": "changed",
-                "key": "baz",
-                "new": "bars",
-                "old": "bas"
-            },
-            {
-                "type": "unchanged",
-                "key": "foo",
-                "value": "bar"
-            },
-            {
-                "type": "changed",
-                "key": "nest",
-                "new": "str",
-                "old": {
-                    "key": "value"
                 }
             }
-        ]
+        }
     },
-    {
+    "group1": {
+        "type": "nested",
+        "children": {
+            "baz": {
+                "type": "changed",
+                "old": "bas",
+                "new": "bars"
+            },
+            "foo": {
+                "type": "unchanged",
+                "value": "bar"
+            },
+            "nest": {
+                "type": "changed",
+                "old": {
+                    "key": "value"
+                },
+                "new": "str"
+            }
+        }
+    },
+    "group2": {
         "type": "deleted",
-        "key": "group2",
-        "old": {
+        "value": {
             "abc": 12345,
             "deep": {
                 "id": 45
             }
         }
     },
-    {
+    "group3": {
         "type": "added",
-        "key": "group3",
-        "new": {
+        "value": {
             "deep": {
                 "id": {
                     "number": 45
@@ -113,4 +95,4 @@
             "fee": 100500
         }
     }
-]
+}

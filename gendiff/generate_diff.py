@@ -4,7 +4,7 @@ from gendiff.stylish import stylish
 
 from gendiff.plain import plain
 
-from gendiff.json import json
+from gendiff.json import json_formatter
 
 
 def generate_diff(file1, file2, format_name='stylish'):
@@ -14,7 +14,7 @@ def generate_diff(file1, file2, format_name='stylish'):
     FORMATTERS = {
         'stylish': stylish,
         'plain': plain,
-        'json': json,
+        'json': json_formatter,
     }
 
     diff = get_diff(first_file, second_file)
