@@ -81,9 +81,9 @@ def render_value(value):
 
 
 RENDER_TYPES = {
-        'added': render_added,
-        'deleted': render_deleted,
-        'changed': render_changed,
-        'unchanged': render_unchanged,
-        'nested': render_nested,
-    }
+    'added': render_added,
+    'deleted': render_deleted,
+    'changed': render_changed,
+    'unchanged': render_unchanged,
+    'nested': render_nested,
+}
