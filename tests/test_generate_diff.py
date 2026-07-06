@@ -1,7 +1,5 @@
-from tests.conftest import read, get_path
-
 from gendiff import generate_diff
-
+from tests.conftest import get_path, read
 
 
 def test_generate_diff_stylish():

@@ -1,10 +1,7 @@
 from pathlib import Path
 
-from gendiff.parser import load_file
-
 from gendiff.build_diff import build_diff
-
-
+from gendiff.parser import load_file
 
 TEST_DATA = Path(__file__).parent / "test_data"
 

@@ -1,7 +1,5 @@
-from tests.conftest import load
-
 from gendiff.build_diff import build_diff
-
+from tests.conftest import load
 
 
 def test_build_diff_json():

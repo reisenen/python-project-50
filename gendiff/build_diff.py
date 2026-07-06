@@ -8,10 +8,15 @@ def build_diff(first, second):
         elif key not in second:
             diff[key] = {'type': 'deleted', 'value': first[key]}
         elif isinstance(first[key], dict) and isinstance(second[key], dict):
-            diff[key] = {'type': 'nested', 'children': build_diff(first[key], second[key])}
+            diff[key] = {
+                'type': 'nested', 
+                'children': build_diff(first[key], second[key])
+            }
         elif first[key] == second[key]:
             diff[key] = {'type': 'unchanged', 'value': first[key]}
         else:
-            diff[key] = {'type': 'changed', 'old': first[key], 'new': second[key]}
+            diff[key] = {
+                'type': 'changed', 'old': first[key], 'new': second[key]
+            }
 
     return diff

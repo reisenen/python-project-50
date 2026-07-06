@@ -1,7 +1,5 @@
-from tests.conftest import read, diff
-
 from gendiff.formatters.plain import plain_formatter
-
+from tests.conftest import diff, read
 
 
 def test_plain_json():

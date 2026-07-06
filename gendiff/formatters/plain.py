@@ -26,25 +26,28 @@ def get_render(node):
 
 def render_added(path, key, value):
     current_path = path + [key]
+    property_name = render_property(current_path)
     current_value = render_value(value['value'])
 
-    line = f"{render_property(current_path)} was added with value: {current_value}"
+    line = f"{property_name} was added with value: {current_value}"
     return line
 
 
 def render_deleted(path, key, value):
     current_path = path + [key]
+    property_name = render_property(current_path)
 
-    line = f"{render_property(current_path)} was removed"
+    line = f"{property_name} was removed"
     return line
 
 
 def render_changed(path, key, value):
     current_path = path + [key]
+    property_name = render_property(current_path)
     old_value = render_value(value['old'])
     new_value = render_value(value['new'])
 
-    line = f"{render_property(current_path)} was updated. From {old_value} to {new_value}"
+    line = f"{property_name} was updated. From {old_value} to {new_value}"
     return line
 
 

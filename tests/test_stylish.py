@@ -1,7 +1,5 @@
-from tests.conftest import read, diff
-
 from gendiff.formatters.stylish import stylish_formatter
-
+from tests.conftest import diff, read
 
 
 def test_stylish_json():
