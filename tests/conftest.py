@@ -2,6 +2,8 @@ from pathlib import Path
 
 from gendiff.parser import load_file
 
+from gendiff.build_diff import build_diff
+
 
 
 TEST_DATA = Path(__file__).parent / "test_data"
@@ -17,3 +19,7 @@ def read(name):
 
 def load(name):
     return load_file(get_path(name))
+
+
+def diff(first, second):
+    return build_diff(load(first), load(second))

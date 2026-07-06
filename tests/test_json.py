@@ -1,15 +1,16 @@
-from tests.conftest import load, read
+from tests.conftest import read, diff
 
 from gendiff.formatters.json import json_formatter
 
-from gendiff.build_diff import build_diff
 
 
-def test_json_formatted():
-    diff_json = build_diff(load('file1_deep.json'), load('file2_deep.json'))
-    diff_yaml = build_diff(load('file1_deep.yml'), load('file2_deep.yml'))
+def test_json_json():
+    assert json_formatter(
+        diff('file1_deep.json', 'file2_deep.json')
+    ) == read('result_json.json')
 
-    excepted = read('result_json.json')
 
-    assert json_formatter(diff_json) == excepted
-    assert json_formatter(diff_yaml) == excepted
+def test_json_yml():
+    assert json_formatter(
+        diff('file1_deep.yml', 'file2_deep.yml')
+    ) == read('result_json.json')
