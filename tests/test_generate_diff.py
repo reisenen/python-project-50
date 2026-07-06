@@ -6,17 +6,23 @@ from gendiff import generate_diff
 
 def test_generate_diff_stylish():
     assert generate_diff(
-        get_path('file1_deep.json'), get_path('file2_deep.json'), 'stylish'
+        file1=get_path('file1_deep.json'), 
+        file2=get_path('file2_deep.json'), 
+        format_name='stylish'
     ) == read('expected_stylish_deep.txt')
 
 
 def test_generate_diff_plain():
     assert generate_diff(
-        get_path('file1_deep.json'), get_path('file2_deep.json'), 'plain'
+        file1=get_path('file1_deep.json'), 
+        file2=get_path('file2_deep.json'), 
+        format_name='plain'
     ) == read('expected_plain.txt')
 
 
 def test_generate_diff_json():
     assert generate_diff(
-        get_path('file1_deep.json'), get_path('file2_deep.json'), 'json'
+        file1=get_path('file1_deep.json'), 
+        file2=get_path('file2_deep.json'), 
+        format_name='json'
     ) == read('expected_diff_deep.json')
