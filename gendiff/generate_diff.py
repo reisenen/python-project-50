@@ -11,6 +11,4 @@ def generate_diff(file1, file2, format_name='stylish'):
 
     formatter = get_formatter(format_name)
 
-    print(diff)
-
     return formatter(diff)
