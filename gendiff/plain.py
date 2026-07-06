@@ -1,42 +1,89 @@
 def plain(diff):
-
-    def walk(node, path):
-        output = []
-        current_path = path
-
-        for key, value in node.items():
-            current_path.append(key)
-
-            if value['type'] == 'nested':
-                output.extend(walk(value['children'], current_path))
-
-            elif value['type'] == 'added':
-                if isinstance(value['value'], dict):
-                    output.append(f"Property '{'.'.join(current_path)}' was added with value: [complex value]")
-                else:
-                    output.append(f"Property '{'.'.join(current_path)}' was added with value: {normalize(value['value'])}")
-            
-            elif value['type'] == 'changed':
-                if isinstance(value['old'], dict):
-                    output.append(f"Property '{'.'.join(current_path)}' was updated. From [complex value] to {normalize(value['new'])}")
-                elif isinstance(value['new'], dict):
-                    output.append(f"Property '{'.'.join(current_path)}' was updated. From {normalize(value['old'])} to [complex value]")
-                else:
-                    output.append(f"Property '{'.'.join(current_path)}' was updated. From {normalize(value['old'])} to {normalize(value['new'])}")
-            
-            elif value['type'] == 'deleted':
-                output.append(f"Property '{'.'.join(current_path)}' was removed")
-            current_path.pop()
-        return output
-
-    return '\n'.join(walk(diff, []))
+    return '\n'.join(render(diff, []))
 
 
-def normalize(value):
-    if isinstance(value, bool):
-        return str(value).lower()
+def render(node, path):
+    lines = []
+
+    for key, value in node.items():
+        current_render = get_render(value)
+        line = current_render(path, key, value)
+
+        if line is None:
+            continue
+
+        if isinstance(line, list):
+            lines.extend(line)
+        else:
+            lines.append(line)
+    return lines
+
+
+def get_render(node):
+    render_type = node['type']
+    return RENDER_TYPES[render_type]
+
+
+def render_added(path, key, value):
+    current_path = path + [key]
+    current_value = render_value(value['value'])
+
+    line = f"{render_property(current_path)} was added with value: {current_value}"
+    return line
+
+
+def render_deleted(path, key, value):
+    current_path = path + [key]
+
+    line = f"{render_property(current_path)} was removed"
+    return line
+
+
+def render_changed(path, key, value):
+    current_path = path + [key]
+    old_value = render_value(value['old'])
+    new_value = render_value(value['new'])
+
+    line = f"{render_property(current_path)} was updated. From {old_value} to {new_value}"
+    return line
+
+
+def render_unchanged(path, key, value):
+    return None
+
+
+def render_nested(path, key, value):
+    current_path = path + [key]
+
+    return render(value['children'], current_path)
+
+
+def render_property(path):
+    current_path = '.'.join(path)
+
+    return f"Property '{current_path}'"
+
+
+def render_value(value):
     if value is None:
         return 'null'
-    if not value:
-        return f"''"
-    return f"'{value}'"
+
+    if isinstance(value, bool):
+        return str(value).lower()
+
+    if isinstance(value, dict):
+        return '[complex value]'
+
+    if isinstance(value, str):
+        return f"'{value}'"
+
+    return str(value)
+
+
+RENDER_TYPES = {
+        'added': render_added,
+        'deleted': render_deleted,
+        'changed': render_changed,
+        'unchanged': render_unchanged,
+        'nested': render_nested,
+    }
