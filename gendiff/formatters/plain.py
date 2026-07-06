@@ -1,4 +1,4 @@
-def plain(diff):
+def plain_formatter(diff):
     return '\n'.join(render(diff, []))
 
 

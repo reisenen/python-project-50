@@ -1,4 +1,4 @@
-def stylish(diff):
+def stylish_formatter(diff):
     return '\n'.join(['{', *render_ast(diff), '}'])
 
 
