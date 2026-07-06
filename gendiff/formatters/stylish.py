@@ -26,6 +26,13 @@ def render_json(json, depth):
 
 
 def get_render(node):
+    RENDER_TYPES = {
+        'added': render_added,
+        'deleted': render_deleted,
+        'unchanged': render_unchanged,
+        'changed': render_changed,
+        'nested': render_nested,
+    }
     render_type = node['type']
     return RENDER_TYPES[render_type]
 
@@ -82,12 +89,3 @@ def render_value(value):
         return str(value).lower()
 
     return str(value)
-
-
-RENDER_TYPES = {
-    'added': render_added,
-    'deleted': render_deleted,
-    'unchanged': render_unchanged,
-    'changed': render_changed,
-    'nested': render_nested,
-}
