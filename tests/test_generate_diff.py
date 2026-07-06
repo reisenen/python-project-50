@@ -1,75 +1,38 @@
-from pathlib import Path
+from tests.conftest import load, read
 
-from gendiff import generate_diff
+from gendiff.formatters import get_formatter
+
+from gendiff.build_diff import build_diff
+
+from pytest import fixture
 
 
-def get_test_data_path(filename):
-    return Path(__file__).parent / "test_data" / filename
+
+def test_generate_diff_stylish():
+    formatter = get_formatter('stylish')
+
+    diff = build_diff(load('file1_deep.json'), load('file2_deep.json'))
+
+    excepted = read('result_deep.txt')
+
+    assert formatter(diff) == excepted
 
 
-def read_file(filename):
-    return get_test_data_path(filename).read_text()
+def test_generate_diff_plain():
+    formatter = get_formatter('plain')
+
+    diff = build_diff(load('file1_deep.json'), load('file2_deep.json'))
+
+    excepted = read('result_plain.txt')
+
+    assert formatter(diff) == excepted
 
 
 def test_generate_diff_json():
-    first_json = get_test_data_path("file1.json")
-    second_json = get_test_data_path("file2.json")
-    result = read_file("result.txt")
+    formatter = get_formatter('json')
 
-    assert generate_diff(first_json, second_json) == result
+    diff = build_diff(load('file1_deep.json'), load('file2_deep.json'))
 
+    excepted = read('result_json.json')
 
-def test_generate_diff_yaml():
-    first_yaml = get_test_data_path("file1.yml")
-    second_yaml = get_test_data_path("file2.yml")
-    result = read_file("result.txt")
-
-    assert generate_diff(first_yaml, second_yaml) == result
-
-
-def test_generate_diff_json_deep():
-    first_json = get_test_data_path("file1_deep.json")
-    second_json = get_test_data_path("file2_deep.json")
-    result = read_file("result_deep.txt")
-
-    assert generate_diff(first_json, second_json) == result
-
-
-def test_generate_diff_yaml_deep():
-    first_yaml = get_test_data_path("file1_deep.yml")
-    second_yaml = get_test_data_path("file2_deep.yml")
-    result = read_file("result_deep.txt")
-
-    assert generate_diff(first_yaml, second_yaml) == result
-
-
-def test_generate_diff_json_plain():
-    first_json = get_test_data_path("file1_deep.json")
-    second_json = get_test_data_path("file2_deep.json")
-    result = read_file("result_plain.txt")
-
-    assert generate_diff(first_json, second_json, 'plain') == result
-
-
-def test_generate_diff_yaml_plain():
-    first_yaml = get_test_data_path("file1_deep.yml")
-    second_yaml = get_test_data_path("file2_deep.yml")
-    result = read_file("result_plain.txt")
-
-    assert generate_diff(first_yaml, second_yaml, 'plain') == result
-
-
-def test_generate_diff_json_json():
-    first_json = get_test_data_path("file1_deep.json")
-    second_json = get_test_data_path("file2_deep.json")
-    result = read_file("result_json.json")
-
-    assert generate_diff(first_json, second_json, 'json') == result
-
-
-def test_generate_diff_yaml_json():
-    first_yaml = get_test_data_path("file1_deep.yml")
-    second_yaml = get_test_data_path("file2_deep.yml")
-    result = read_file("result_json.json")
-
-    assert generate_diff(first_yaml, second_yaml, 'json') == result
+    assert formatter(diff) == excepted
