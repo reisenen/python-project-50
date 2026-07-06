@@ -2,11 +2,11 @@ from gendiff.parser import load_file
 
 from gendiff.build_diff import build_diff
 
-from gendiff.stylish import stylish
+from gendiff.formatters.stylish import stylish
 
-from gendiff.plain import plain
+from gendiff.formatters.plain import plain
 
-from gendiff.json import json_formatter
+from gendiff.formatters.json import json_formatter
 
 
 def generate_diff(file1, file2, format_name='stylish'):
