@@ -32,4 +32,6 @@ jobs:
           args: >
             -Dsonar.projectKey=reisenen_python-project-50
             -Dsonar.organization=reisenen
+            -Dsonar.sources=gendiff
+            -Dsonar.tests=tests
             -Dsonar.python.coverage.reportPaths=coverage.xml
