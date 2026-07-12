@@ -1,26 +1,26 @@
 def stylish_formatter(diff):
-    return '\n'.join(['{', *render_ast(diff), '}'])
+    return '\n'.join(['{', *render_nodes(diff), '}'])
 
 
 def render(node, depth):
     if is_nested_node(node):
-        return render_ast(node['children'], depth)
-    return render_json(node, depth)
+        return render_nodes(node['children'], depth)
+    return render_dict(node, depth)
 
 
-def render_ast(ast, depth=1):
+def render_nodes(nodes, depth=1):
     lines = []
 
-    for key, value in ast.items():
-        current_render = get_render(value)
-        lines.extend(current_render(depth, key, value))
+    for key, node in nodes.items():
+        current_render = get_render(node)
+        lines.extend(current_render(depth, key, node))
     return lines
 
 
-def render_json(json, depth):
+def render_dict(node, depth):
     lines = []
 
-    for key, value in json.items():
+    for key, value in node.items():
         lines.extend(render_line(depth, key, value))
     return lines
 
