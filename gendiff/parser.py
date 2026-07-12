@@ -11,7 +11,8 @@ PARSERS = {
 
 
 def load_file(file_path):
-    ext = Path(file_path).suffix.lower().lstrip('.')
+    path = Path(file_path)
+    ext = path.suffix.lower().lstrip('.')
 
-    with open(file_path) as f:
+    with path.open() as f:
         return PARSERS[ext](f)

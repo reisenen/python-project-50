@@ -35,7 +35,7 @@ cd python-project-50
 Create a virtual environment and install dependencies:
 
 ```bash
-make install
+uv sync
 ```
 
 Run the utility:
